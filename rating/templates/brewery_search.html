@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brewery Search</title>
+</head>
+<body>
+    <h1>Brewery Search</h1>
+    <a href="{% url 'profile' %}">Home</a>
+    <form method="post" action="{% url 'brewery_search' %}">
+        {% csrf_token %}
+        <label for="city">Enter City:</label>
+        <input type="text" id="city" name="city" required>
+        <button type="submit">Search</button>
+
+    </form>
+        
+    {% if breweries %}
+        <h2>Breweries in {{ city }}</h2>
+        <ul>
+            {% for brewery in breweries %}
+            <li>
+                {{ brewery|pprint }}
+                <a href="{% url 'brewery_detail' brewery.id  %}">
+                    {{ brewery.name }} - {{ brewery.city }}, {{ brewery.state }}
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    {% if error_message %}
+        <p>{{ error_message }}</p>
+    {% endif %}
+</body>
+</html>

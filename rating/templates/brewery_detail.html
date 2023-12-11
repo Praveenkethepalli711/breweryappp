@@ -1,0 +1,22 @@
+<!-- brewery_search/templates/brewery_search/brewery_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ brewery.name }} Detail</title>
+</head>
+<body>
+    <h1>{{ brewery.name }} Detail</h1>
+    
+    <p>Location: {{ brewery.city }}, {{ brewery.state }}</p>
+    <p>Description: {{ brewery.description }}</p>
+    
+    <!-- Add more information as needed -->
+
+    <a href="{% url 'brewery_search' %}">Back to Search</a>
+    <a href="{% url 'profile' %}">Home</a>
+
+    <a href="{% url 'add_rating' brewery.id %}">Add Rating</a>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!-- ratings/templates/ratings/brewery_list.html -->
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Example HTML file -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/static.css' %}">
+
+    <title>Brewery List</title>
+   
+</head>
+<body>
+    <h1>Brewery List</h1>
+    <a href="{% url 'profile' %}" >Back to profile</a>
+    
+    <ul>
+        {% for brewery in breweries %}
+        <li>
+            <strong>Name: {{ brewery.name }}</strong><br>
+            Address: {{ brewery.address_1 }}, {{ brewery.city }}, {{ brewery.state }}<br>
+            Type: {{ brewery.brewery_type }}<br>
+            Phone: {{ brewery.phone }}<br>
+            Website: <a href="{{ brewery.website_url }}" target="_blank">{{ brewery.website_url }}</a>
+            <p>
+                Rating: {% if brewery.get_average_rating_for_brewery %}{{ brewery.get_average_rating_for_brewery }}{% else %}No ratings yet{% endif %}
+            </p>
+            <a href="{% url 'add_rating' brewery.id %}">Add Rating</a>
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

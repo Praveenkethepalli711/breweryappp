@@ -1,0 +1,253 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Rating</title>
+
+    <!-- Link to your CSS file for styling -->
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Lato');
+@import url('https://fonts.googleapis.com/css?family=Thasadith:400,400i,700,700i');
+
+body {
+    background: rgb(3, 15, 13);
+    background: -moz-linear-gradient(45deg, rgba(3, 15, 13, 1) 2%, rgba(10, 52, 56, 1) 52%, rgba(32, 124, 202, 1) 52%, rgba(0, 229, 187, 1) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(3, 15, 13, 1) 2%, rgba(10, 52, 56, 1) 52%, rgba(32, 124, 202, 1) 52%, rgba(0, 229, 187, 1) 100%);
+    background: linear-gradient(45deg, rgba(3, 15, 13, 1) 2%, rgba(10, 52, 56, 1) 52%, rgba(32, 124, 202, 1) 52%, rgba(0, 229, 187, 1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#030f0d', endColorstr='#00e5bb', GradientType=1);
+    background-repeat: no-repeat;
+    background-size: 100% 120%;
+}
+
+.container {
+    background: rgb(87, 87, 87);
+    width: 80em;
+    height: 40em;
+    border: 1px solid black;
+    margin: 5em auto;
+}
+
+.navbar {
+    height: 3.5em;
+    background: rgb(59, 59, 59);
+}
+
+input[placeholder="search app"] {
+    float: right;
+    outline: none;
+    margin: 1em 1.5em;
+    height: 1.5em;
+}
+
+a img[alt=menuIcon] {
+    margin: 0.4em 1em;
+}
+
+nav a {
+    text-decoration: none;
+    font-size: 25px;
+    font-family: 'Lato', sans-serif;
+    color: rgb(2, 218, 218);
+}
+
+img[alt="searchIcon"] {
+    display: none;
+}
+
+nav {
+    margin: -4em 5em;
+}
+
+nav ul li {
+    display: inline-block;
+    margin: 0 1em;
+}
+
+.app-list ul li {
+    list-style: none;
+}
+
+.app-list li {
+    background: rgb(49, 49, 49);
+    margin: 0 -2.5em;
+    width: 80em;
+    height: 6em;
+    border-bottom: 1px solid rgb(2, 218, 218);
+}
+
+.app-list li:hover {
+    background: rgb(56, 56, 56);
+}
+
+#rateMe {
+    font-size: 14px;
+    position: absolute;
+    margin: -25px 130px;
+    transform: rotateY(180deg);
+    font-family: 'Lato', sans-serif;
+    font-weight: inherit;
+}
+
+img[alt="appIcon"] {
+    vertical-align: middle;
+    padding-top: 15px;
+    border-radius: 50px;
+}
+
+figcaption {
+    margin: -0.9em 5em;
+    font-weight: bold;
+    color: white;
+    font-family: 'Thasadith', sans-serif;
+}
+
+.app-list a {
+    font-family: 'Lato', sans-serif;
+    color: rgb(2, 218, 218);
+    text-decoration: none;
+    font-size: 25px;
+    margin: 0 1em;
+}
+
+.app-list .rating {
+    margin: -3em 53em;
+    width: 20em;
+    unicode-bidi: bidi-override;
+    direction: rtl;
+    text-align: center;
+}
+
+.rating > .fa {
+    display: inline-block;
+    position: relative;
+    width: 1.1em;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.checked {
+    color: #FDE16D;
+}
+
+.rating > .fa:hover,
+.rating > .fa:hover ~ .fa {
+    text-shadow: 0 0 9px rgba(238, 255, 0, 0.788);
+    color: #FDE16D;
+}
+
+.fa.rated::before {
+    content: '\2605';
+    color: #FDE16D;
+    font-size: 40px;
+}
+
+.app-list li p {
+    color: white;
+    font-size: 30px;
+    float: right;
+    margin: 0.4em 2em;
+    font-family: 'Lato', sans-serif;
+}
+
+#description {
+    height: 4em;
+    color: white;
+    font-size: 126%;
+    width: 103.4%;
+    margin: 0 -2em;
+    font-family: 'Lato', sans-serif;
+}
+
+#designer {
+    font-size: 120%;
+}
+
+@media screen and (max-width: 1307px) {
+    .container {
+        width: 70em;
+    }
+
+    .app-list li {
+        width: 70em;
+    }
+
+    .app-list .rating {
+        margin: -3em 48em;
+    }
+
+    #description {
+        width: 103.8%;
+    }
+
+}
+
+/* Add other media queries as needed */
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</head>
+<body>
+    <h1>Add Rating for {{ brewery.name }}</h1>
+
+    <form method="post" action="{% url 'add_rating' brewery.id %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <!-- Star Rating -->
+        <div class="rating" style="transform: rotateY(180deg);">
+            <p id="rateMe">Rate me</p>
+            <span  onmouseover="starmark(this)" onclick="starmark(this)" id="5"   class="fa fa-star"></span>
+            <span onmouseover="starmark(this)" onclick="starmark(this)" id="4"   class="fa fa-star "></span>
+            <span onmouseover="starmark(this)" onclick="starmark(this)" id="3"   class="fa fa-star "></span>
+            <span onmouseover="starmark(this)" onclick="starmark(this)" id="2"   class="fa fa-star"></span>
+            <span onmouseover="starmark(this)" onclick="starmark(this)" id="1"   class="fa fa-star"></span>
+        </div>
+
+        <!-- Input for the selected star rating -->
+        <input type="hidden" id="stars" name="stars" value="0" required>
+        
+
+        <label for="comment">Comment:</label>
+        <textarea id="comment" name="comment"></textarea>
+
+        <button type="submit">Submit Rating</button>
+    </form>
+
+    <a href="{% url 'brewery_detail' brewery_id=brewery.id %}">Back to Brewery Detail</a>
+
+    <!-- Link to your JavaScript file for the star rating logic -->
+    <script>
+        // script.js
+
+        var count = 0;
+
+function starmark(item) {
+    count = item.id[0];
+    sessionStorage.starRating = count;
+
+    var subid = item.id.substring(1);
+
+    for (var i = 0; i < 5; i++) {
+        var starId = (i + 1) + subid;
+        var starElement = document.getElementById(starId);
+
+        if (i < count) {
+            starElement.style.color = "#FDE16D"; // Selected star color
+        } else {
+            starElement.style.color = "white"; // Change this to the color you want for unselected stars
+        }
+    }
+
+    // Update the value of the hidden input
+    document.getElementById("stars").value = count;
+
+    // Display the selected star count
+    document.getElementById("visibleStars").innerText = count;
+}
+    </script>
+</body>
+</html>
