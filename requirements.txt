@@ -69,7 +69,7 @@ platformdirs==2.5.3
 prompt-toolkit==3.0.32
 protobuf==3.19.4
 psutil==5.9.4
-psycopg2==2.9.3
+psycopg2-binary==2.9.3
 pure-eval==0.2.2
 py-moneyed==1.2
 pyasn1==0.4.8
